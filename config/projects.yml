@@ -1,0 +1,4 @@
+---
+- ensemble-nfs:
+  - github-url: git@github.com:mmm/ensemble-nfs.git
+  - launchpad-url: lp:~mark-mims/+junk/ensemble-nfs

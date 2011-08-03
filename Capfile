@@ -18,6 +18,7 @@ role :web, domain
 role :db,  domain, :primary => true
 
 # environment settings
+set :use_sudo, false
 set :user, "gitpad"
 set :group, "gitpad"
 set :deploy_to, "/usr/local/gitpad"
@@ -31,7 +32,7 @@ set :branch, "master"
 set :git_enable_submodules, 1
 
 # where the apache vhost will be generated
-set :apache_vhost_dir, "/etc/apache2/sites-available/"
+set :apache_vhost_dir, "/usr/local/gitpad/"
 
 namespace :deploy do
   task :restart do

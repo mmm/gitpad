@@ -1,0 +1,25 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'json'
+require 'yaml'
+require 'rest-client'
+
+URL = "https://github.com/api/v2/json/repos/show/mmm"
+
+response = RestClient.get URL
+
+projects = []
+response_body = JSON.parse(response.body)
+if response_body and response_body['repositories']
+  repositories = response_body['repositories']
+  repositories.each do |repo_hash|
+    projects << {
+      repo_hash['name'] => {
+        "github_url" => repo_hash['url'],
+        "launchpad_url" => "lp:~mark-mims/+junk/#{repo_hash['name']}"
+      }
+    }
+  end
+end
+puts projects.to_yaml

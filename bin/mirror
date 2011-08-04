@@ -1,13 +1,25 @@
-#!/bin/bash
+#!/usr/bin/ruby
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
 
+require 'yaml'
+require 'project'
 
+puts "starting mirror"
 
+projects = YAML.load_file("config/projects.yml")
+projects.each do |project|
 
-# pull from github
+  puts project.to_yaml
 
+  puts "cloning github version"
+  project.clone
 
-# pull from launchpad
+  puts "pushing to launchpad"
+  project.push
 
+end
 
+puts "done"
 
 # check merge status
+

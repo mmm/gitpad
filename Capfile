@@ -19,8 +19,8 @@ role :db,  domain, :primary => true
 
 # environment settings
 set :use_sudo, false
-set :user, "gitpad"
-set :group, "gitpad"
+set :user, "mmm"
+set :group, "mmm"
 set :deploy_to, "/usr/local/gitpad"
 set :deploy_via, :remote_cache
 default_run_options[:pty] = true

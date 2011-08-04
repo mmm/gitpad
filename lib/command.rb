@@ -9,8 +9,9 @@ class Command
   end
 
   def execute
+    puts "about to execute: #{@command}"
     system(@command)
-    #puts "would execute #{@command}"
+    puts "done executing: #{@command}"
   end
 
   # log

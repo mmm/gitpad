@@ -11,8 +11,8 @@ projects.each do |project|
 
   puts project.to_yaml
 
-  puts "cloning github version"
-  project.clone
+  puts "pulling github version"
+  project.pull
 
   puts "pushing to launchpad"
   project.push

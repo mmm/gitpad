@@ -10,8 +10,8 @@ module GitUtils
   end
 
   def git_remote_exists?(clone_directory, remote_name, remote_url)
-    File.exists?(clone_directory) && 
-      not `cd #{clone_directory} && git remote | grep #{remote_name}`.empty?
+    not `cd #{clone_directory} && git remote | grep #{remote_name}`.empty?
+    #existing_name, existing_url, push = `cd #{clone_directory} && git remote -v | grep push`.split
   end
 
   def git_add_remote(clone_directory, remote_name, remote_url)

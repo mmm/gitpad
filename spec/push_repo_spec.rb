@@ -18,7 +18,7 @@ describe Repo do
     end 
 
     it 'should create a new repo' do
-      @repo.push_to("git@github.com:charmers/#{@repo_name}")
+      @repo.push_to("git@github.com:charms/#{@repo_name}")
       `git list-charms | grep #{@repo_name}`.should_not be_empty
     end
 

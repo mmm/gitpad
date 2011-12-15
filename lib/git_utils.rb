@@ -7,7 +7,8 @@ module GitUtils
   end
 
   def github_create(name, description, website)
-    `git create #{name} #{description} #{website}` unless github_repo_exists?(name)
+    #`git create "#{name}" "#{description}" "#{website}"` unless github_repo_exists?(name)
+    `git create "#{name}" "#{description}" "#{website}"`
   end
 
   def git_remote_exists?(clone_directory, remote_name, remote_url)
@@ -15,9 +16,10 @@ module GitUtils
   end
 
   def git_add_remote(clone_directory, remote_name, remote_url)
-    unless git_remote_exists?(clone_directory, remote_name, remote_url)
-      `cd #{clone_directory} && git remote add #{remote_name} #{remote_url}`
-    end
+    #unless git_remote_exists?(clone_directory, remote_name, remote_url)
+    #  `cd #{clone_directory} && git remote add #{remote_name} #{remote_url}`
+    #end
+    `cd #{clone_directory} && git remote add #{remote_name} #{remote_url}`
   end
 
   def git_push(clone_directory, remote_name = "github", remote_branch = "master")

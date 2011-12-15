@@ -11,8 +11,9 @@ class Repo
     @name = name
   end
 
+  CACHE_DIR = "#{File.dirname(__FILE__)}/../projects"
   def working_directory
-    "#{File.dirname(__FILE__)}/../projects/#{name}"
+    "#{CACHE_DIR}/#{@name}"
   end
 
   def has_working_directory?
@@ -20,30 +21,33 @@ class Repo
   end
 
   def pull_from(url)
-    # behave differently based on url format
-    #`cd $CACHE_DIR && git bzr clone $repo`
-    #  cache dir exists?
-    #    pull from lp
-    #  else
-    #    clone from lp
+
+    #TODO behave differently based on url format
+    
+    if has_working_directory?
+      #TODO check the .git/config entry is the same url
+      `cd #{working_directory} && git bzr pull`
+    else
+      `cd #{CACHE_DIR} && git bzr clone #{url} #{working_directory}`
+    end
   end
 
   def push_to(url)
-    # behave differently based on url format
-    #
+
+    #TODO behave differently based on url format
+    
+    raise "no working directory... pull first" unless has_working_directory?
+
     # check github repo exists
+    `git create charms/#{@name} "Mirror of juju charm, pull requests and modifications welcome!" "http://charms.kapilt.com/charms/oneiric/#{@name}"`
+
     # add remote to local clone
+    `cd #{working_directory} && git remote add github #{url}`
+
     # push to github
+    `cd #{working_directory} && git push github master`
+
     #
-    #
-    #  if [ -d $charm_name ]; then
-    #    cd $charm_name
-    #    git create charms/$charm_name "Mirror of juju charm, pull requests and modifications welcome!" "http://charms.kapilt.com/charms/oneiric/$charm_name"
-    #    git remote add github git@github.com:charms/$charm_name
-    #    git push github master
-    #    cd ..
-    #  fi
-    #  
     #  merge problems?
     #
     #  push --force?

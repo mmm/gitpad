@@ -53,26 +53,8 @@ class Repo
 
     # safe to push with no new changes... just wasteful
     git_push(working_directory, "github")
-
-    #
-    #  merge problems?
-    #
-    #  push --force?
-    #
-    ###################3
-    #
-    #  find or create github remote
-    #  add it
-    #
-    #  pull github remote
-    #
-    #  merge
-    #
-    #  push up to github remote
-    #
-    #  problems?
-    #    just wipe github version and push fresh
-    #
+    # fails?  perhaps try this over again with --force?
+    #    maybe just wipe github version and push fresh
   end
 
 end

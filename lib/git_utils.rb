@@ -2,18 +2,16 @@
 module GitUtils
 
   def github_repo_exists?(name)
-    #TODO `git list-charms | grep #{@name}`
-    false
+    not `git list-charms | grep #{@name}`.empty?
   end
 
   def github_create(name, description, website)
-    #TODO `git create "#{name}" "#{description}" "#{website}"` unless github_repo_exists?(name)
     `git create "#{name}" "#{description}" "#{website}"`
   end
 
   def git_remote_exists?(clone_directory, remote_name, remote_url)
-    #TODO
-    false
+    File.exists?(clone_directory) && 
+      not `cd #{clone_directory} && git remote | grep #{remote_name}`.empty?
   end
 
   def git_add_remote(clone_directory, remote_name, remote_url)

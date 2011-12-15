@@ -8,6 +8,7 @@ def timestamp
 end
 
 def master_repo_urls
+  #%w( lp:charm/mysql lp:charm/roundcube )
   `charm list | grep lp:charm`.split
 end
 
@@ -15,7 +16,7 @@ puts "mirror started at #{timestamp}"
 
 master_repo_urls.reverse.each do |master_url|
   repo_name = master_url.gsub(/.*\//,"")
-  mirror_url = "https://github.com/charms/#{repo_name}"
+  mirror_url = "git@github.com:charms/#{repo_name}"
   begin
     Repo.mirror(repo_name, master_url, mirror_url)
     puts "successfully mirrored #{master_url} to #{mirror_url}"

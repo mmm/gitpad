@@ -34,7 +34,7 @@ describe Repo do
     end
 
     after(:each) do
-      #`git destroy @repo_name`
+      `git destroy charms/#{@repo_name}`
       @cache_dir = File.join(File.dirname(__FILE__), "..", "projects", @repo_name) 
       FileUtils.rm_rf(@cache_dir)
     end 

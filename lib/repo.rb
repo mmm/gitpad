@@ -34,7 +34,7 @@ class Repo
       #TODO check the .git/config entry is the same url
       git_bzr_pull( working_directory, url )
     else
-      git_bzr_clone( CACHE_DIR, url, working_directory )
+      git_bzr_clone( CACHE_DIR, url, @name )
     end
   end
 

@@ -1,5 +1,11 @@
 
+require 'git_utils'
+require 'git_bzr_utils'
+
 class Repo
+
+  include GitUtils
+  include GitBzrUtils
 
   def Repo.mirror(name, source_url, target_url)
     repo = Repo.new(name)
@@ -26,9 +32,9 @@ class Repo
     
     if has_working_directory?
       #TODO check the .git/config entry is the same url
-      `cd #{working_directory} && git bzr pull`
+      git_bzr_pull( working_directory, url )
     else
-      `cd #{CACHE_DIR} && git bzr clone #{url} #{working_directory}`
+      git_bzr_clone( CACHE_DIR, url, working_directory )
     end
   end
 
@@ -36,16 +42,17 @@ class Repo
 
     #TODO behave differently based on url format
     
-    raise "no working directory... pull first" unless has_working_directory?
+    raise "no working directory... you need to pull first" unless has_working_directory?
 
-    # check github repo exists
-    `git create charms/#{@name} "Mirror of juju charm, pull requests and modifications welcome!" "http://charms.kapilt.com/charms/oneiric/#{@name}"`
+    #TODO check github repo exists
+    # otherwise, create it
+    github_create("charms/#{@name}",
+                  "Mirror of juju charm, pull requests and modifications welcome!",
+                  "http://charms.kapilt.com/charms/oneiric/#{@name}" )
 
-    # add remote to local clone
-    `cd #{working_directory} && git remote add github #{url}`
+    git_add_remote(working_directory, "github", url)
 
-    # push to github
-    `cd #{working_directory} && git push github master`
+    git_push(working_directory, "github")
 
     #
     #  merge problems?

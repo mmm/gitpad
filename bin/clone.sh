@@ -1,8 +1,9 @@
 #!/bin/bash
 
-
-
-repos=`~/bin/list-charms.rb`
+def reverse_order(list)
+end
+repos = `charm list | grep lp:charm`
+time_ordered_repos = repos.split.reverse.join("\n")
 
 for repo in $repos
 do

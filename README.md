@@ -55,6 +55,8 @@ but then cap to control the app too?
 
 #TODO
 
+- capture external deps.... bzr config, git config, github api tokens, etc
+- use git config to keep github api tokens for these dependent scripts
 - pull github api scripts into the lib... they're separate deps atm
 - separate branch for two-way mirroring development
 

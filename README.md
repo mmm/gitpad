@@ -1,59 +1,33 @@
 
 # GitPad ( LaunchHub?, HubPad? )
 
-This is a bridge to dual-host and mirror projects on launchpad and github.
+This is a bridge to dual-host and mirror projects from launchpad to github.
 
-Just a set of scripts that use git-bzr-ng to mirror a list of projects mapped in projects.yml.
+Just a set of scripts that use git-bzr-ng to mirror projects
 
 
 # Usage
 
 ## one-way mirror
 
-One way to do this is to use github as a master
+see `bin/mirror`... it essentially:
 
 every so often:
-  - pull from github
-  - push to lp
-  - log shit
-  - maybe update status?
-  - maybe send notification?
-  - or maybe generate status on request?
-
-needs:
-  - cronjobs
-  - rake for status?
-  - rake for control
-  - sinatra for status?
-
-## sync
-
-no master... merge
-
-every so often:
-  - pull from github
   - pull from lp
-  - merge these two (manage on separate branches? just use bzr/master?)
+  - merge these two (just use bzr/master)
     - what to do in conflicts?
       - nothing? 
       - just report status?
-      - try to fix?
       - send notification?
-  - push back to github
-  - push back to lp
+  - create github repo unless it exists
+  - push up to github
+
 
 needs:
   - cronjobs
   - rake for status?
   - rake for control
   - sinatra for status?
-  - sinatra for control?
-    (is there something like a sinatra rake runner already?)
-
-
-# Notes
-
- - check out `mr`
 
 
 # or...
@@ -70,7 +44,6 @@ maybe at least use some ideas from cap...
 `local_cache`?
 
 
-
 So what should this look like?
 
 maybe...
@@ -79,4 +52,9 @@ cap to deploy the basic app...
 
 but then cap to control the app too?
 
+
+#TODO
+
+- pull github api scripts into the lib... they're separate deps atm
+- separate branch for two-way mirroring development
 

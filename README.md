@@ -5,6 +5,8 @@ This is a bridge to dual-host and mirror projects from launchpad to github.
 
 Just a set of scripts that use git-bzr-ng to mirror projects
 
+Currently just mirrors from lp to github.
+
 
 # Installation
 

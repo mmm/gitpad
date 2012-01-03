@@ -10,17 +10,19 @@ Currently just mirrors from lp to github.
 
 # Installation
 
-- ruby
-- gems
+- ruby w/ gems:
   - json
   - restclient
   - rspec
 - git w/ plugins:
   - git-create
   - git-list-charms
-- git-bzr-ng
-- bzr
+  - git-bzr-ng
+- bzr w/ plugins:
+  - bzr-fastexport
 - charm-tools
+
+# Usage
 
 ## sample cronjob
 
@@ -32,8 +34,6 @@ Currently just mirrors from lp to github.
     # m h  dom mon dow   command
 
     @daily $HOME/projects/canonical/gitpad/bin/mirror >> $HOME/projects/canonical/gitpad/mirror.log 2>&1
-
-# Usage
 
 ## one-way mirror
 

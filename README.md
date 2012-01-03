@@ -6,6 +6,31 @@ This is a bridge to dual-host and mirror projects from launchpad to github.
 Just a set of scripts that use git-bzr-ng to mirror projects
 
 
+# Installation
+
+- ruby
+- gems
+  - json
+  - restclient
+  - rspec
+- git w/ plugins:
+  - git-create
+  - git-list-charms
+- git-bzr-ng
+- bzr
+- charm-tools
+
+## sample cronjob
+
+    SHELL=/bin/bash
+    HOME=/home/mmm
+    PATH=/home/mmm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    MAILTO=mark.mims@canonical.com
+
+    # m h  dom mon dow   command
+
+    @daily $HOME/projects/canonical/gitpad/bin/mirror >> $HOME/projects/canonical/gitpad/mirror.log 2>&1
+
 # Usage
 
 ## one-way mirror

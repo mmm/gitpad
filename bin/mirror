@@ -8,8 +8,8 @@ def timestamp
 end
 
 def master_repo_urls
-  #%w( lp:charm/mysql lp:charm/roundcube )
-  `charm list | grep lp:charm`.split
+  #%w( lp:charms/mysql lp:charms/roundcube )
+  `charm list | grep lp:charms`.split
 end
 
 puts "mirror started at #{timestamp}"

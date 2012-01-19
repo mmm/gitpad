@@ -17,7 +17,7 @@ if response_body and response_body['repositories']
     projects << {
       repo_hash['name'] => {
         "github_url" => repo_hash['url'],
-        "launchpad_url" => "lp:charm/#{repo_hash['name']}"
+        "launchpad_url" => "lp:charms/#{repo_hash['name']}"
       }
     }
   end

@@ -1,3 +1,4 @@
 projects/*
 *.bak
 *.log
+tmp/*

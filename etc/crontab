@@ -1,0 +1,9 @@
+SHELL=/bin/bash
+HOME=/home/mmm
+PATH=/home/mmm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+MAILTO=mark.mims@canonical.com
+
+# m h  dom mon dow   command
+
+@daily $HOME/projects/canonical/gitpad/bin/mirror >> $HOME/projects/canonical/gitpad/mirror.log 2>&1
+

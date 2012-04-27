@@ -1,0 +1,32 @@
+#!/usr/bin/ruby
+$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+
+require 'repo'
+
+def timestamp
+  `date +\"%G-%m-%d-%H%M%S\"`
+end
+
+def github_repo_urls
+  #%w( git@github.com/charms/hive git@github.com/charms/munin  )
+  `git list-charms`.split
+end
+
+puts "update-series started at #{timestamp}"
+
+description='Mirror of juju charm, pull requests and modifications welcome!'
+website_base='http://charms.kapilt.com/charms/precise'
+
+github_repo_urls.each do |github_url|
+  repo_name = github_url.gsub(/.*\//,"").chomp('.git')
+  begin
+    Repo.update(repo_name, description, "#{website_base}/#{repo_name}")
+    puts "successfully updated #{repo_name} to #{website_base}/#{repo_name}"
+  rescue => e
+    puts "error updating repo #{repo_name}"
+    puts "error: #{e}"
+    # keep going on the rest of the list
+  end
+end
+
+puts "update-series done at #{timestamp}"

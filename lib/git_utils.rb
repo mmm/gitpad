@@ -10,6 +10,11 @@ module GitUtils
     `git create "#{name}" "#{description}" "#{website}"`
   end
 
+  def github_update(name, description, website)
+    #puts "updating \"#{name}\" \"#{description}\" \"#{website}\""
+    `git edit "charms/#{name}" "#{description}" "#{website}"`
+  end
+
   def git_remote_exists?(clone_directory, remote_name, remote_url)
     not `cd #{clone_directory} && git remote | grep #{remote_name}`.empty?
     #existing_name, existing_url, push = `cd #{clone_directory} && git remote -v | grep push`.split

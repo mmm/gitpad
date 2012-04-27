@@ -1,0 +1,49 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'json'
+require 'rest-client'
+
+def usage 
+  puts <<-EOS
+    usage: #{$0} <name> [<description>] [<homepage>]
+    where:
+      name => name of the repository
+      description => repo description
+      homepage => repo homepage
+  EOS
+  exit 1
+end
+ARGV.size > 0 || usage
+
+def bad_environment
+  puts "#{$0} requires GITHUB_USER and GITHUB_TOKEN to be set in your environment"
+  exit 1
+end
+ENV["GITHUB_USER"] && ENV["GITHUB_TOKEN"] || bad_environment
+
+USER = ENV["GITHUB_USER"]
+TOKEN = ENV["GITHUB_TOKEN"]
+
+BASE_URL = "https://github.com/api/v2/json/"
+
+params = {
+  "login" => USER,
+  "token" => TOKEN,
+  "values" => {
+    "description" => ARGV[1] || "",
+    "homepage" => ARGV[2] || "",
+    "has_wiki" => '0',
+    "has_issues" => '0',
+    "has_downloads" => '0'
+  }
+}
+
+puts "updating repo: #{params.to_json}"
+
+URL = "#{BASE_URL}repos/show/#{ARGV[0]}"
+
+response = RestClient.post URL, params
+
+puts response.body
+

@@ -1,0 +1,55 @@
+#!/usr/bin/ruby
+
+#puts "disabled"
+#exit 1
+
+require 'rubygems'
+require 'json'
+require 'rest-client'
+
+def usage 
+  puts <<-EOS
+    usage: #{$0} <name>
+    where:
+      name => name of the repository
+  EOS
+  exit 1
+end
+ARGV.size > 0 || usage
+
+def bad_environment
+  puts "#{$0} requires GITHUB_USER and GITHUB_TOKEN to be set in your environment"
+  exit 1
+end
+ENV["GITHUB_USER"] && ENV["GITHUB_TOKEN"] || bad_environment
+
+USER = ENV["GITHUB_USER"]
+TOKEN = ENV["GITHUB_TOKEN"]
+
+BASE_URL = "https://github.com/api/v2/json/"
+
+params = {
+  "login" => USER,
+  "token" => TOKEN
+}
+
+puts "destroying repo: #{params.to_json}"
+
+URL = "#{BASE_URL}repos/delete/#{ARGV[0]}"
+
+# first pass, get the token
+response =  JSON( RestClient.post( URL, params ))
+puts "response: #{response.to_json}"
+token = response["delete_token"]
+
+if token
+  # second pass, really delete
+  params.merge!({"delete_token" => token})
+  puts params.to_json
+  response = RestClient.post URL, params
+else
+  puts "no token love"
+end
+
+puts response.body
+

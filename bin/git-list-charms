@@ -1,0 +1,17 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'json'
+require 'rest-client'
+
+URL = "https://api.github.com/orgs/charms/repos"
+
+params = {
+}
+
+response = RestClient.get URL, params
+
+response_body = JSON.parse(response.body)
+response_body.each do |repo|
+  puts repo['git_url']
+end

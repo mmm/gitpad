@@ -1,0 +1,45 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'json'
+require 'rest-client'
+
+def usage 
+  puts <<-EOS
+    usage: #{$0} <name> [<description>] [<homepage>] [<public>]
+    where:
+      name => name of the repository
+      description => repo description
+      homepage => homepage url
+      public => 1 for public, 0 for private
+  EOS
+  exit 1
+end
+ARGV.size > 0 || usage
+
+def bad_environment
+  puts "#{$0} requires GITHUB_USER and GITHUB_TOKEN to be set in your environment"
+  exit 1
+end
+ENV["GITHUB_USER"] && ENV["GITHUB_TOKEN"] || bad_environment
+
+USER = ENV["GITHUB_USER"]
+TOKEN = ENV["GITHUB_TOKEN"]
+
+URL = "https://github.com/api/v2/json/repos/create"
+
+params = {
+  "login" => USER,
+  "token" => TOKEN,
+  "name" => ARGV[0],
+  "description" => ARGV[1] || "",
+  "homepage" => ARGV[2] || "",
+  "public" => ARGV[3] || "1",
+}
+
+puts "creating repo: #{params.to_json}"
+
+response = RestClient.post URL, params
+
+puts response.body
+

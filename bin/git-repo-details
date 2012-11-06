@@ -1,0 +1,26 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'github_api'
+require 'json'
+require 'rest-client'
+
+def usage 
+  puts <<-EOS
+    usage: #{$0} <name>
+    where:
+      name => short name of the repository
+  EOS
+  exit 1
+end
+ARGV.size == 1 || usage
+
+begin
+  github = Github.new
+  repo = github.repos.get( "charms",  ARGV[0] )
+rescue => e
+  STDERR.puts e.to_s
+  exit 1
+end
+
+puts repo.to_json

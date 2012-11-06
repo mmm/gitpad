@@ -2,12 +2,13 @@
 module GitUtils
 
   def github_repo_exists?(name)
-    not `git list-charms | grep #{@name}`.empty?
+    not `git repo-details #{name}`.empty?
   end
 
   def github_create(name, description, website)
     #puts "creating \"#{name}\" \"#{description}\" \"#{website}\""
     `git create "#{name}" "#{description}" "#{website}"`
+    raise("create failed") unless $?.success?
   end
 
   def github_update(name, description, website)

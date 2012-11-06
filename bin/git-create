@@ -20,7 +20,7 @@ end
 ARGV.size > 0 || usage
 
 def bad_environment
-  puts "#{$0} requires GITHUB_USER and GITHUB_TOKEN to be set in your environment"
+  STDERR.puts "#{$0} requires GITHUB_USER and GITHUB_TOKEN to be set in your environment"
   exit 1
 end
 ENV["GITHUB_USER"] && ENV["GITPAD_OAUTH_TOKEN"] || bad_environment

@@ -21,7 +21,7 @@ master_repo_urls.reverse.each do |master_url|
   begin
     puts "trying to mirror #{master_url} to #{mirror_url}"
     Repo.mirror(repo_name, master_url, mirror_url)
-    puts "successfully mirrored #{master_url} to #{mirror_url}"
+    puts "done trying to mirror #{master_url} to #{mirror_url}"
     sleep 10
   rescue => e
     puts "error mirroring repo #{master_url} to #{mirror_url}"

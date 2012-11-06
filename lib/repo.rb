@@ -49,7 +49,7 @@ class Repo
     
     raise "no working directory... you need to pull first" unless has_working_directory?
 
-    repo_name = "charms/#{@name}"
+    repo_name = "#{@name}"
     repo_desc = "Mirror of juju charm, pull requests and modifications welcome!"
     repo_site = "http://jujucharms.com/charms/precise/#{@name}"
     github_create(repo_name, repo_desc, repo_site) unless github_repo_exists?(repo_name)

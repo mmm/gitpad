@@ -4,8 +4,8 @@
 #exit 1
 
 require 'rubygems'
+require 'github_api'
 require 'json'
-require 'rest-client'
 
 def usage 
   puts <<-EOS
@@ -21,35 +21,16 @@ def bad_environment
   puts "#{$0} requires GITHUB_USER and GITHUB_TOKEN to be set in your environment"
   exit 1
 end
-ENV["GITHUB_USER"] && ENV["GITHUB_TOKEN"] || bad_environment
+ENV["GITHUB_USER"] && ENV["GITPAD_OAUTH_TOKEN"] || bad_environment
 
 USER = ENV["GITHUB_USER"]
-TOKEN = ENV["GITHUB_TOKEN"]
+TOKEN = ENV["GITPAD_OAUTH_TOKEN"]
 
-BASE_URL = "https://github.com/api/v2/json/"
+repo_name = ARGV[0]
 
-params = {
-  "login" => USER,
-  "token" => TOKEN
-}
+puts "destroying repo: #{repo_name}"
 
-puts "destroying repo: #{params.to_json}"
+github = Github.new(:oauth_token => TOKEN)
+response = github.repos.delete('mmm', repo_name)
 
-URL = "#{BASE_URL}repos/delete/#{ARGV[0]}"
-
-# first pass, get the token
-response =  JSON( RestClient.post( URL, params ))
-puts "response: #{response.to_json}"
-token = response["delete_token"]
-
-if token
-  # second pass, really delete
-  params.merge!({"delete_token" => token})
-  puts params.to_json
-  response = RestClient.post URL, params
-else
-  puts "no token love"
-end
-
-puts response.body
-
+puts response.to_json

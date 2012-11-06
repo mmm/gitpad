@@ -51,7 +51,7 @@ class Repo
 
     repo_name = "charms/#{@name}"
     repo_desc = "Mirror of juju charm, pull requests and modifications welcome!"
-    repo_site = "http://charms.kapilt.com/charms/precise/#{@name}"
+    repo_site = "http://jujucharms.com/charms/precise/#{@name}"
     github_create(repo_name, repo_desc, repo_site) unless github_repo_exists?(repo_name)
 
     git_add_remote(working_directory, "github", url) unless git_remote_exists?(working_directory, "github", url)

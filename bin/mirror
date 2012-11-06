@@ -12,12 +12,14 @@ def master_repo_urls
   `charm list | grep lp:charms`.split
 end
 
+STDOUT.sync = true
 puts "mirror started at #{timestamp}"
 
 master_repo_urls.reverse.each do |master_url|
   repo_name = master_url.gsub(/.*\//,"")
   mirror_url = "git@github.com:charms/#{repo_name}"
   begin
+    puts "trying to mirror #{master_url} to #{mirror_url}"
     Repo.mirror(repo_name, master_url, mirror_url)
     puts "successfully mirrored #{master_url} to #{mirror_url}"
   rescue => e

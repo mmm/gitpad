@@ -1,17 +1,16 @@
 #!/usr/bin/ruby
 
 require 'rubygems'
+require 'github_api'
 require 'json'
 require 'rest-client'
 
-URL = "https://api.github.com/orgs/charms/repos"
-
-params = {
-}
-
-response = RestClient.get URL, params
-
-response_body = JSON.parse(response.body)
-response_body.each do |repo|
-  puts repo['git_url']
+github = Github.new
+github.repos.list({ "org" => "charms","per_page" => "200"} ) do |repo|
+  puts repo.git_url
 end
+
+# split this out to use something like
+#puts github.repos.get( "charms",  "ceph" ).to_json
+# to detect presence of a repository
+# throws an exception (caught a 404) if the repo isn't there

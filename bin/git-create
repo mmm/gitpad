@@ -1,13 +1,15 @@
 #!/usr/bin/ruby
 
 require 'rubygems'
+require 'github_api'
 require 'json'
 require 'rest-client'
 
 def usage 
   puts <<-EOS
-    usage: #{$0} <name> [<description>] [<homepage>] [<public>]
+    usage: #{$0} [<org>/]<name> [<description>] [<homepage>] [<public>]
     where:
+      org => optional organization name
       name => name of the repository
       description => repo description
       homepage => homepage url
@@ -21,25 +23,34 @@ def bad_environment
   puts "#{$0} requires GITHUB_USER and GITHUB_TOKEN to be set in your environment"
   exit 1
 end
-ENV["GITHUB_USER"] && ENV["GITHUB_TOKEN"] || bad_environment
+ENV["GITHUB_USER"] && ENV["GITPAD_OAUTH_TOKEN"] || bad_environment
 
 USER = ENV["GITHUB_USER"]
-TOKEN = ENV["GITHUB_TOKEN"]
-
-URL = "https://github.com/api/v2/json/repos/create"
+TOKEN = ENV["GITPAD_OAUTH_TOKEN"]
 
 params = {
-  "login" => USER,
-  "token" => TOKEN,
   "name" => ARGV[0],
   "description" => ARGV[1] || "",
   "homepage" => ARGV[2] || "",
-  "public" => ARGV[3] || "1",
+  "private" => ARGV[3] || false,
+  "has_issues" => false,
+  "has_wiki" => false,
+  "has_downloads" => false,
+  "org" => "charms",
 }
+
+#if ( ARGV[0] =~ /\// )
+#  # split it up
+#  organization = "charms"
+#  params.merge({"org" => "#{organization}"})
+#else
+#  params.merge({"name" => ARGV[0]})
+#end
 
 puts "creating repo: #{params.to_json}"
 
-response = RestClient.post URL, params
+github = Github.new(:oauth_token => TOKEN)
+response = github.repos.create(params)
 
-puts response.body
+puts response.to_json
 

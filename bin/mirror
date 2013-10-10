@@ -17,12 +17,18 @@ puts "mirror started at #{timestamp}"
 
 master_repo_urls.reverse.each do |master_url|
   repo_name = master_url.gsub(/.*\//,"")
+
+  if ( repo_name =~ /juju-gui/ ) 
+    puts "skipping juju-gui"
+    next
+  end
+
   mirror_url = "git@github.com:charms/#{repo_name}"
   begin
     puts "trying to mirror #{master_url} to #{mirror_url}"
     Repo.mirror(repo_name, master_url, mirror_url)
     puts "done trying to mirror #{master_url} to #{mirror_url}"
-    sleep 10
+    sleep 20
   rescue => e
     puts "error mirroring repo #{master_url} to #{mirror_url}"
     puts "error: #{e}"

@@ -8,7 +8,7 @@ module GitUtils
   def github_create(name, description, website)
     #puts "creating \"#{name}\" \"#{description}\" \"#{website}\""
     `git create "#{name}" "#{description}" "#{website}"`
-    raise("create failed") unless $?.success?
+    #raise("create failed") unless $?.success?
   end
 
   def github_update(name, description, website)

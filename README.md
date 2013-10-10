@@ -26,11 +26,6 @@ Currently just mirrors from lp to github.
 
 ## sample cronjob
 
-    SHELL=/bin/bash
-    HOME=/home/mmm
-    PATH=/home/mmm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    MAILTO=mark.mims@canonical.com
-
     # m h  dom mon dow   command
 
     @daily $HOME/projects/canonical/gitpad/bin/mirror >> $HOME/projects/canonical/gitpad/mirror.log 2>&1
@@ -51,39 +46,22 @@ every so often:
 
 
 needs:
-  - cronjobs
   - rake for status?
   - rake for control
-  - sinatra for status?
-
-
-# or...
-
-what about capistrano?
-
-capistrano's used to working with multiple repos, projects, remote stuff, etc
-can probably get away with cap tasks to do all of this from local machine
-
-would it be better to use rake locally?
-
-
-maybe at least use some ideas from cap...
-`local_cache`?
-
-
-So what should this look like?
-
-maybe...
-
-cap to deploy the basic app...
-
-but then cap to control the app too?
 
 
 #TODO
 
 - capture external deps.... bzr config, git config, github api tokens, etc
-- use git config to keep github api tokens for these dependent scripts
-- pull github api scripts into the lib... they're separate deps atm
+- integrate oauth2 into the actual scripts... i.e., add `get_app_token` scripts
+- move all scripts over to oauth
 - separate branch for two-way mirroring development
+- need to get series branches in...
+  - perhaps look at all lp:~charmers branches instead of just lp:charms
+  - do something with hadoop-xxx oneiric charms?
+  - do something special with the lp:charms branches... i.e., "master"
+  - can this be done automatically?  perhaps we need to maintain a manual mapping of bzr branchs?
+    are there bzr tools to help with this... i.e., lp:~charmers/charms/<charm-name> as the main repo
+    with several branches?
+
 
